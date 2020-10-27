@@ -10,7 +10,6 @@ const postCtrl = require('../controllers/post'); // Importation du contrôleur
 
 
 router.post('/create', auth, multer, postCtrl.create);
-router.put('/:id', auth, multer, postCtrl.update);
 router.get('/getAll', auth, postCtrl.findAll);
 router.get('/:id', auth, postCtrl.findOne);
 router.delete('/:id', auth, postCtrl.delete);

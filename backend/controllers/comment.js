@@ -30,32 +30,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
-    // Validate Request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Le champ ne peut pas être vide!"
-        });
-    }
 
-    Comment.updateById(
-        req.params.id,
-        new Comment(req.body),
-        (err, data) => {
-            if (err) {
-                if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: `Not found commentaire with id ${req.params.id}.`
-                    });
-                } else {
-                    res.status(500).send({
-                        message: "Error updating commentaire with id " + req.params.id
-                    });
-                }
-            } else res.send(data);
-        }
-    );
-};
 
 exports.delete = (req, res) => {
 

@@ -10,6 +10,9 @@ exports.signup = (req, res) => {
     if (!req.body) {
         res.status(400).json({ message: "Erreur !" })
     }
+
+    // Comparer les emails utilisateurs
+
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             let role = "USER"
@@ -18,11 +21,12 @@ exports.signup = (req, res) => {
             }
 
             const user = {
-                "email": req.body.email,
-                "password": hash,
-                "nom": req.body.nom,
-                "prenom": req.body.prenom,
-                "isAdmin": role
+                email: req.body.email,
+                password: hash,
+                username: req.body.username,
+                nom: req.body.nom,
+                prenom: req.body.prenom,
+                isAdmin: role
             }
             User.create(user, (err, data) => {
                 if (err)
@@ -35,7 +39,7 @@ exports.signup = (req, res) => {
 // CONNEXION AVEC UN UTILISATEUR DÉJÀ CRÉE
 
 exports.login = (req, res) => {
-    User.findOne(req.body.email, (err, user) => {
+    User.findOne(req.body.username, (err, user) => {
         if (err) {
             res.status(400).json({ message: err })
         }
@@ -72,6 +76,18 @@ exports.findOne = (req, res) => {
             }
         } else res.send(data);
     });
+};
+
+
+exports.findAll = (req, res) => {
+  User.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving customers."
+      });
+    else res.send(data);
+  });
 };
 
 

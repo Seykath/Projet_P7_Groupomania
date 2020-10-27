@@ -2,11 +2,12 @@ const sql = require("../connectDb");
 
 const User = (user) => {
     this.email = user.email,
-        this.password = user.password,
-        this.nom = user.nom,
-        this.prenom = user.prenom,
-        this.isAdmin = user.isAdmin,
-        this.createAt = user.createAt
+    this.password = user.password,
+    this.username = user.username,
+    this.nom = user.nom,
+    this.prenom = user.prenom,
+    this.isAdmin = user.isAdmin,
+    this.createAt = user.createAt
 };
 
 // CRÉATION D'UN NOUVEL UTILISATEUR
@@ -24,7 +25,7 @@ User.create = (newUser, result) => {
 }
 
 
-// RÉCUPÉRATION D'UN UTILISATEUR AVEC SON EMAIL
+// RÉCUPÉRATION D'UN UTILISATEUR AVEC SON Pseudo
 User.findById = (userId, result) => {
     sql.query(`SELECT * FROM users WHERE id ='${userId}'`, (err, res) => {
         if (err) {
@@ -43,6 +44,36 @@ User.findById = (userId, result) => {
     });
 };
 
+User.findOne = (username, result) => {
+    sql.query(`SELECT * FROM users WHERE username ='${username}'`, (err, res) => {
+        if (err) {
+            console.log("erreur: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Utilisateur trouvé : ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        result({ kind: "Non trouvé !" }, null);
+    });
+};
+
+User.getAll = result => {
+  sql.query("SELECT * FROM users", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("users: ", res);
+    result(null, res);
+  });
+};
 
 // SUPPRESSION D'UN UTILISATEUR AVEC SON ID
 User.remove = (id, result) => {

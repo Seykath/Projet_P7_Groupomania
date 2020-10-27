@@ -35,28 +35,6 @@ Comment.getAll = result => {
     });
 };
 
-Comment.updateById = (id, comment, result) => {
-    sql.query(
-        "UPDATE comments SET message = ? WHERE id = ?",
-        [comment.message, id],
-        (err, res) => {
-            if (err) {
-                console.log("error: ", err);
-                result(null, err);
-                return;
-            }
-
-            if (res.affectedRows == 0) {
-                // not found Customer with the id
-                result({ kind: "not_found" }, null);
-                return;
-            }
-
-            console.log("Message modifié: ", { id: id, ...comment });
-            result(null, { id: id, ...comment });
-        }
-    );
-};
 
 // Suppression commentaire via son ID
 Comment.remove = (id, result) => {

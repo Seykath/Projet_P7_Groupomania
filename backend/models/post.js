@@ -25,7 +25,7 @@ Post.create = (newPost, result) => {
 
 // Récupération des posts
 Post.getAll = result => {
-    sql.query(`SELECT p.id, p.titre, p.content, p.date, p.user_id AS "author_id", u.email, u.nom, u.prenom FROM posts p INNER JOIN users u ON p.user_id = u.id ORDER BY date DESC`, (err, res) => {
+    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.date, posts.user_id, users.email, users.nom, users.prenom, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY date DESC`, (err, res) => {
         if (err) {
             console.log("erreur: ", err);
             result(null, err);
@@ -35,6 +35,7 @@ Post.getAll = result => {
         posts = res.map(element => {
             let topic = new Post(element)
             topic.author = {
+                username: element.username,
                 nom: element.nom,
                 prenom: element.prenom,
                 email: element.email,
@@ -42,7 +43,7 @@ Post.getAll = result => {
             }
             return topic;
         })
-        console.log("post : ", posts);
+        console.log("post: ", posts);
         result(null, posts);
     });
 };
@@ -50,7 +51,7 @@ Post.getAll = result => {
 // Récupération post avec son ID
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT p.id, p.titre, p.content, p.date, p.user_id AS "author_id", u.email, u.nom, u.prenom FROM posts p INNER JOIN users u ON p.user_id = u.id WHERE p.id = ${postId} ORDER BY date DESC`,
+    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.date, posts.user_id, users.email, users.nom, users.prenom , users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.id = ${postId} ORDER BY date DESC`,
         (err, res) => {
             if (err) {
                 console.log("erreur: ", err);
@@ -62,6 +63,7 @@ Post.findById = (postId, result) => {
                 posts = res.map(element => {
                     let topic = new Post(element)
                     topic.author = {
+                        username: element.username,
                         nom: element.nom,
                         prenom: element.prenom,
                         email: element.email,
@@ -78,29 +80,6 @@ Post.findById = (postId, result) => {
         })
 };
 
-
-Post.updateById = (id, post, result) => {
-    sql.query(
-        "UPDATE posts SET titre = ?, content = ? WHERE id = ?",
-        [post.titre, post.content, id],
-        (err, res) => {
-            if (err) {
-                console.log("error: ", err);
-                result(null, err);
-                return;
-            }
-
-            if (res.affectedRows == 0) {
-                // not found Customer with the id
-                result({ kind: "not_found" }, null);
-                return;
-            }
-
-            console.log("Post modifié: ", { id: id, ...post });
-            result(null, { id: id, ...post });
-        }
-    );
-};
 
 
 // Suppression post via son ID

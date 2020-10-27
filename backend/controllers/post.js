@@ -10,8 +10,8 @@ exports.create = (req, res) => {
     const post = new Post({
         titre: req.body.titre,
         content: req.body.content,
-        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         user_id: req.body.user_id
+        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     })
     Post.create(post, (err, data) => {
         if (err)
@@ -71,33 +71,6 @@ exports.findOne = (req, res) => {
     })
 }
 
-
-exports.update = (req, res) => {
-    // Validate Request
-    if (!req.body) {
-        res.status(400).send({
-            message: "Le champ ne peut pas être vide!"
-        });
-    }
-
-    Post.updateById(
-        req.params.id,
-        new Post(req.body),
-        (err, data) => {
-            if (err) {
-                if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: `Not found commentaire with id ${req.params.id}.`
-                    });
-                } else {
-                    res.status(500).send({
-                        message: "Error updating commentaire with id " + req.params.id
-                    });
-                }
-            } else res.send(data);
-        }
-    );
-};
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
