@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="post" v-for="post in posts.slice()" :key="post.id">
+    <div class="post" v-for="post in posts" :key="post.id">
         <div class="card gedf-card mr-auto ml-auto p-0 col-md-6">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
@@ -24,41 +24,32 @@
                         <p class="card-text">{{ post.content }}</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="card-link"><font-awesome-icon icon="comment" /> Commenter</a>
-                        <!-- <a href="#" class="card-link"><font-awesome-icon icon="share" /> Partager</a> -->
+                        <button class="btn btn-comment" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span><font-awesome-icon icon="comment" class="ml-2" /></button>
+                        
+                        <div class="postComments" v-if="showComments[post.post_id]">
+                            <div class=" d-flex mt-2" v-for="comment in comments" :key="comment.postId">
+                                <div class="bloc-comments">
+                                    <div v-if="post.post_id == comment.post_id" class="commentUser p-2 mr-2 ml-2">
+                                        <p><strong>{{ comment.user_id }}</strong> {{ moment(comment.date).fromNow() }} à écrit</p>
+                                        <p> {{ comment.message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <form @submit.prevent="sendComment">
+                        <div class="form-group">
+                             <div class="input-group mb-2 mt-2 pl-3 pr-3">
+                                <input type="text" class="form-control" placeholder="Ecrire un commentaire" v-model="message">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
+                                     </div>
+                            </div>
+                        </div>
+                    </form>
         </div>
     </div>
 </div>
-
-
-
-
-<!-- 
-<div>
-    <div class="post" v-for="post in posts.slice()" :key="post.id">
-    <div class="container d-flex justify-content-center mt-5">
-        <div class="card col-md-10">
-            <div class="card-body d-flex post-header "><p><strong class="mr-3">{{post.author.username}}</strong>{{ moment(post.date).fromNow() }}</p>
-                
-            </div>
-            <div class="card-body mt-1">
-                <h5 class="card-title">{{ post.titre }}</h5>
-                <p class="card-text mt-3">{{ post.content }}</p>
-                <div class="card-footer mt-4">
-                 <div class="postComments d-flex" v-for="comment in comments.slice()" :key="comment.id">
-                <div v-if="post.post_id == comment.post_id">
-                    <p><strong>{{ comment.user_id }}</strong> {{ moment(comment.date).fromNow() }}</p>
-                    <p> {{ comment.message }}</p>
-                    
-                </div>
-            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div> -->
 
 </template>
 
@@ -74,35 +65,76 @@ export default {
     name: "Post",
     data() {
         return {
+        error: [],
         userId: localStorage.getItem('userId'),
         isAdmin: localStorage.getItem('isAdmin'),
         moment: moment,
         posts : [],
-        comments : [],
+        comments : {},
         users: {},
+        showComments : {},
+        message: "",
         }
     },
     methods: {
+
+        // Suppression d'un post
           removePost(post) {
              ApiService.removePost(post)
             location.reload()
         },
+
+        // Affichage des commentaires liés au post
+        showCommentsAction(post) {
+            this.showComments[post.post_id] = !this.showComments[post.post_id]
+            this.showComments = JSON.parse(JSON.stringify(this.showComments))
+        },
+        sendComment(e) {
+        const message = this.message;
+        console.log(message);
+
+        if (this.message) {
+            return true,
+            ApiService.createComment(message)
+        .then(() => {
+            alert('Message envoyé avec succès !')
+        document.location.reload();
+        })
+        }
+
+        this.errors = [];
+
+        if (!this.message) {
+            this.errors.push('Message requis')
+        }
+
+        alert('Message requis !')
+        e.preventDefault();
+    },
     },
 
     mounted() {
         //Appel à API pour affichage de tous les messages
-       
-      ApiService.getAllPost()
+
+      ApiService.getAllPost() 
       .then(response => {
-        console.log(response.data);
         this.posts = response.data;
+        console.log(this.posts);
       })
       .catch(error => console.log(error));
 
       ApiService.getAllComment()
       .then(response => {
-        // console.log(response.data);
         this.comments = response.data;
+        console.log(this.comments);
+      })
+      .catch(error => console.log(error));
+
+      ApiService.getAllUsers()
+      .then(response => {
+        this.users = response.data;
+        console.log(this.users);
+
       })
       .catch(error => console.log(error));
 
@@ -130,6 +162,17 @@ export default {
 
 .ellipsis {
     color: #343A40;
+}
+
+.commentUser {
+    width: 100%;
+    border: 1px solid rgb(149, 149, 149, 0.6);
+    border-radius: 15px;
+    background-color: white;
+}
+
+.btn-comment {
+    border: 1px solid rgba(0, 0, 0, 0.5)
 }
 
 body {

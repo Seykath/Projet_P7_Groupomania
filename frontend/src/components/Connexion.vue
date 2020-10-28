@@ -82,9 +82,9 @@ export default {
             localStorage.setItem("userId", result.data.userId)
             localStorage.setItem("token", result.data.token)
 
-         alert("Vous êtes à présent connecté !")
+         alert("Vous êtes à présent connecté !");
 
-         let id = JSON.parse(localStorage.getItem("userId"))
+         let id = JSON.parse(localStorage.getItem("userId"));
      axios.get(`http://localhost:3000/api/auth/user/${id}`,{
                         headers: {
                             Authorization: "Bearer " + localStorage.getItem("token")

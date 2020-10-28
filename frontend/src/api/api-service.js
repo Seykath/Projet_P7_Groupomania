@@ -3,6 +3,7 @@ import axios from "axios";
 
 const URL="http://localhost:3000/api/";
 const ApiService =  {
+
   
   getAllPost() {
     return axios
@@ -11,6 +12,7 @@ const ApiService =  {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
       })
+      
   },
 
   getAllComment() {
@@ -25,6 +27,16 @@ const ApiService =  {
   getAllUsers() {
     return axios
       .get(URL + "auth/users", {
+             headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+      })
+  },
+
+  getOneUser(user) {
+    console.log(user);
+    return axios
+      .get(URL + `auth/user/${user.user_id}`, {
              headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
@@ -46,7 +58,7 @@ const ApiService =  {
   },
 
   removePost(post) {
-    console.log(post)
+    console.log(post);
 
     return axios 
     .delete(URL + `post/${post.post_id}`,
@@ -55,8 +67,21 @@ const ApiService =  {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
     })
-  }
+  },
 
+  createComment(message) {
+  return axios 
+    .post(URL + "comment/create",{ 
+      user_id: localStorage.getItem('userId'),
+      message: message,
+    },
+    {
+            headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+    })
+  },
+  
 }
 
 export default ApiService
