@@ -27,20 +27,22 @@
                         <button class="btn btn-comment" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span><font-awesome-icon icon="comment" class="ml-2" /></button>
                         
                         <div class="postComments" v-if="showComments[post.post_id]">
-                            <div class=" d-flex mt-2" v-for="comment in comments" :key="comment.postId">
+                            <div class=" mt-2" v-for="comment in comments" :key="comment.postId">
                                 <div class="bloc-comments">
                                     <div v-if="post.post_id == comment.post_id" class="commentUser p-2 mr-2 ml-2">
-                                        <p><strong>{{ comment.user_id }}</strong> {{ moment(comment.date).fromNow() }} à écrit</p>
-                                        <p> {{ comment.message }}</p>
+                                        <div class="d-flex justify-content-between">
+                                        <p><strong class="comment-user mr-2">{{ comment.user_id }},</strong><span class="text-muted">{{ moment(comment.date).fromNow() }} </span></p>
+                                        <button type="button" class="btn btn-dark btm-sm " v-if="comment.user_id == userId || isAdmin == 'ADMIN'" @click="removeComment(comment)">supprimer</button></div>
+                                        <p> {{ comment.message }}</p>   
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <form @submit.prevent="sendComment">
+                    <form @submit.prevent="sendComment(post.post_id)" >
                         <div class="form-group">
                              <div class="input-group mb-2 mt-2 pl-3 pr-3">
-                                <input type="text" class="form-control" placeholder="Ecrire un commentaire" v-model="message">
+                                <input type="text" class="form-control"  placeholder="Ecrire un commentaire" v-model.lazy="message">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
                                      </div>
@@ -73,7 +75,8 @@ export default {
         comments : {},
         users: {},
         showComments : {},
-        message: "",
+        message:  "",
+        commentUsername: "",
         }
     },
     methods: {
@@ -89,28 +92,19 @@ export default {
             this.showComments[post.post_id] = !this.showComments[post.post_id]
             this.showComments = JSON.parse(JSON.stringify(this.showComments))
         },
-        sendComment(e) {
-        const message = this.message;
-        console.log(message);
+        sendComment(postId) {
+            const message =  this.message;
+            console.log(message);
+            console.log(postId);
+            ApiService.createComment(message, postId)
+            this.message = "";
+            location.reload()
+        },
+        removeComment(comment) {
+            ApiService.removeComment(comment);
+            location.reload();
+        },
 
-        if (this.message) {
-            return true,
-            ApiService.createComment(message)
-        .then(() => {
-            alert('Message envoyé avec succès !')
-        document.location.reload();
-        })
-        }
-
-        this.errors = [];
-
-        if (!this.message) {
-            this.errors.push('Message requis')
-        }
-
-        alert('Message requis !')
-        e.preventDefault();
-    },
     },
 
     mounted() {
@@ -137,7 +131,6 @@ export default {
 
       })
       .catch(error => console.log(error));
-
     },
     
 }

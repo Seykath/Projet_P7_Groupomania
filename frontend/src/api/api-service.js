@@ -69,12 +69,25 @@ const ApiService =  {
     })
   },
 
-  createComment(message) {
+  createComment(message, postId) {
   return axios 
     .post(URL + "comment/create",{ 
-      user_id: localStorage.getItem('userId'),
       message: message,
+      post_id: postId,
+      user_id: localStorage.getItem('userId'),
     },
+    {
+            headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+    })
+  },
+
+   removeComment(comment) {
+    console.log(comment);
+
+    return axios 
+    .delete(URL + `comment/${comment.id}`,
     {
             headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")

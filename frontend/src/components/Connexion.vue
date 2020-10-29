@@ -102,8 +102,7 @@ export default {
         .catch(error => console.log(error))
         
          
-          this.$router.push('/mur');
-          location.reload();
+          this.$router.push('/');
          })
          
          e.preventDefault();
