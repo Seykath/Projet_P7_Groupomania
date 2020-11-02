@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 02 nov. 2020 à 15:36
+-- Généré le : lun. 02 nov. 2020 à 22:40
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -60,20 +60,22 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `user_id` int(11) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `content` text NOT NULL,
+  `imageUrl` varchar(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `titre`, `content`, `date`) VALUES
-(12, 68, 'Bienvenue sur Groupomania', 'Salut à tous ! Bienvenue sur le premier réseau social d\'entreprise de Groupomania. Cette appli est conçu pour que vous puissiez partager avec vos collègues et favoriser également la cohésion de notre grand groupe !', '2020-10-19 14:11:07'),
-(13, 69, 'Félicitations !', 'Bravo à notre admin pour cette application bien sympathique !', '2020-10-19 14:14:01'),
-(15, 68, ' Mise à jour ! ', 'Petite mise à jour pour faire un essai sur la récupération d\'éléments', '2020-10-22 09:09:27'),
-(36, 70, 'Ajout des commentaires ', 'J\'apprécie beaucoup les petits onglets commentaires ! les couleurs sont sympathique et le fait de pouvoir voir le nombre de commentaires et un + ! Bravo !', '2020-10-30 02:01:16');
+INSERT INTO `posts` (`id`, `user_id`, `titre`, `content`, `imageUrl`, `date`) VALUES
+(12, 68, 'Bienvenue sur Groupomania', 'Salut à tous ! Bienvenue sur le premier réseau social d\'entreprise de Groupomania. Cette appli est conçu pour que vous puissiez partager avec vos collègues et favoriser également la cohésion de notre grand groupe !', '', '2020-10-19 14:11:07'),
+(13, 69, 'Félicitations !', 'Bravo à notre admin pour cette application bien sympathique !', '', '2020-10-19 14:14:01'),
+(15, 68, ' Mise à jour ! ', 'Petite mise à jour pour faire un essai sur la récupération d\'éléments', '', '2020-10-22 09:09:27'),
+(36, 70, 'Ajout des commentaires ', 'J\'apprécie beaucoup les petits onglets commentaires ! les couleurs sont sympathique et le fait de pouvoir voir le nombre de commentaires et un + ! Bravo !', '', '2020-10-30 02:01:16'),
+(55, 68, 'Hobby Warhammer 40K', 'Je ne sais pas si certains d\'entre vous pratique ce Hobby mais je voulais partager avec vous une passion que j\'ai, si certains y joue également n\'hésitez pas à m\'en parler ! \nje vous partage une photo d\'une de mes armées peintes :\n\n', 'http://localhost:3000/images/529-original.jpg1604353472098.jpg', '2020-11-02 21:44:32');
 
 -- --------------------------------------------------------
 
