@@ -5,15 +5,15 @@ pré-requis ( node.js d'installé et lancer un serveur avec (WAMP, XAMP, MAMP ..
 
 1- Cloner le repository sur votre ordinateur
 
-2- Importer la BDD à partir du fichier "".sql
+2- Importer la BDD à partir du fichier groupomania.sql
 
 ### Dossier Backend  
-3- commande à exécuter : _cd backend_  
-4- commande à exécuter : _npm install_  
-5- commande à exécuter : _nodemon server_  
+3- commande à exécuter : __cd backend__  
+4- commande à exécuter : __npm install__  
+5- commande à exécuter : __nodemon server__  
 
 ### Dossier Frontend  
-6- commande à exécuter : _cd frontend_ 
-7- commande à exécuter : _npm install_  
-8- commande à exécuter : _npm run serve_ 
+6- commande à exécuter : __cd frontend__  
+7- commande à exécuter : __npm install__  
+8- commande à exécuter : __npm run serve__  
 
