@@ -13,7 +13,7 @@
     <input type="text" id="nom" class="form-control" 
     placeholder="Lenon" 
     pattern="[a-zâäàéèùêëîïôöçñA-Z\s]{3,30}" 
-    v-model="form.nom">
+    v-model="nom">
     <div class="invalid-feedback">
         Veuillez entrer un nom
       </div>
@@ -23,7 +23,7 @@
     <label for="prenom">Prénom</label>
     <input type="text" id="prenom" class="form-control"  
     placeholder="John" pattern="[a-zâäàéèùêëîïôöçñA-Z\s]{3,30}" 
-    v-model="form.prenom">
+    v-model="prenom">
 </div>
 
 <div class="form-group">
@@ -33,7 +33,7 @@
     class="form-control"  
     placeholder="Jojo" 
     pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}" 
-    v-model="form.username">
+    v-model="username">
 </div>
 
 <div class="form-group">
@@ -43,7 +43,7 @@
     class="form-control"  
     placeholder="ex : JohnLenon@exemple.com" 
     pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}" 
-    v-model="form.email">
+    v-model="email">
 </div>
 
 <div class="form-group">
@@ -53,7 +53,7 @@
     placeholder="ex : Alpha1!" 
     title="Doit contenir 6 caractères minimum, une majuscule, une minuscule et un chiffre" 
     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}" 
-    v-model="form.password">
+    v-model="password">
 </div>
 
 <button  type="submit" class="col-md-12 btn-lg btn-dark mt-3 mb-3" @submit.prevent="register">Envoyer</button>
@@ -69,20 +69,18 @@
 <script>
 
 
-import axios from 'axios';
+import ApiService from '../api/api-service';
 
 export default {
     name: "inscription",
     data() {
       return {
         errors: [],
-        form: {
         nom: null,
         prenom: null,
         username: null,
         email: null,
         password: null
-        }
       }
     },
     methods: {
@@ -110,9 +108,7 @@ export default {
           return true;
         }
 
-        let url='http://localhost:3000/api/auth/signup';
-
-         axios.post(url, this.form)
+        ApiService.signup(this.nom, this.prenom, this.username, this.email, this.password)
          .then(() => {
 
          alert("Bienvenue ! vous pouvez maintenant vous connecter !")

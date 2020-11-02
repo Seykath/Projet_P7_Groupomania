@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const fs = require('fs');
 
 
 // Création Post
@@ -10,8 +11,7 @@ exports.create = (req, res) => {
     const post = new Post({
         titre: req.body.titre,
         content: req.body.content,
-        user_id: req.body.user_id
-        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        user_id: req.body.user_id,
     })
     Post.create(post, (err, data) => {
         if (err)
@@ -74,7 +74,6 @@ exports.findOne = (req, res) => {
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
-
     Post.remove(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "Non trouvé !") {
@@ -84,7 +83,9 @@ exports.delete = (req, res) => {
             }
         } else res.json({ message: 'Post supprimé avec succès !' })
     })
+
 }
+
 
 
 

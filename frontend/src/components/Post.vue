@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="main">
     <div class="post" v-for="post in posts" :key="post.id">
-        <div class="card gedf-card mr-auto ml-auto p-0 col-md-6">
+        <div class="card gedf-card mt-5 mr-auto ml-auto p-0 col-md-6">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
@@ -14,7 +14,7 @@
                                 </div>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-danger btn-sm" v-if="post.user_id == userId || isAdmin == 'ADMIN'" @click="removePost(post)">supprimer</button>
+                                <button type="button" class="btn btn-danger btn-sm btn-responsive" v-if="post.user_id == userId || isAdmin == 'ADMIN'" @click="removePost(post)">X</button>
                             </div>
                         </div>
 
@@ -24,17 +24,15 @@
                         <p class="card-text">{{ post.content }}</p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-comment" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span><font-awesome-icon icon="comment" class="ml-2" /></button>
+                        <button class="btn btn-info btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span><font-awesome-icon icon="comment" class="ml-2" /></button>
                         
                         <div class="postComments" v-if="showComments[post.post_id]">
                             <div class=" mt-2" v-for="comment in comments" :key="comment.postId">
                                 <div class="bloc-comments">
                                     <div v-if="post.post_id == comment.post_id" class="commentUser p-2 mr-2 ml-2">
-                                        <div class="d-flex justify-content-between">
-                                        <p><strong class="comment-user mr-2">{{ comment.user_id }},</strong><span class="text-muted">{{ moment(comment.date).fromNow() }} </span></p>
-                                        <button type="button" class="btn btn-dark btm-sm " v-if="comment.user_id == userId || isAdmin == 'ADMIN'" @click="removeComment(comment)">supprimer</button></div>
-                                        <p> {{ comment.message }}</p>   
-                                    </div>
+                                        <p class="mb-1"><strong class="comment-user mr-2">{{ comment.username }},</strong><span class="text-muted">{{ moment(comment.date).fromNow() }} </span></p>
+                                        <p class="mb-2"> {{ comment.message }}</p>   
+                                <button type="button" class="btn btn-dark btm-sm btn-responsive-comment " v-if="comment.user_id == userId || isAdmin == 'ADMIN'" @click="removeComment(comment)">supprimer</button></div>
                                 </div>
                             </div>
                         </div>
@@ -73,18 +71,21 @@ export default {
         moment: moment,
         posts : [],
         comments : {},
-        users: {},
         showComments : {},
         message:  "",
-        commentUsername: "",
         }
     },
     methods: {
 
         // Suppression d'un post
           removePost(post) {
-             ApiService.removePost(post)
-            location.reload()
+              
+            if ( confirm("Êtes vous sûr de vouloir supprimer le post ?") ) {
+                ApiService.removePost(post)
+                location.reload()
+            } else {
+               return;
+            }
         },
 
         // Affichage des commentaires liés au post
@@ -101,8 +102,13 @@ export default {
             location.reload()
         },
         removeComment(comment) {
-            ApiService.removeComment(comment);
-            location.reload();
+
+            if ( confirm("Êtes vous sûr de vouloir supprimer le commentaire ?") ) {
+                ApiService.removeComment(comment)
+                location.reload()
+            } else {
+               return;
+            }
         },
 
     },
@@ -121,14 +127,6 @@ export default {
       .then(response => {
         this.comments = response.data;
         console.log(this.comments);
-      })
-      .catch(error => console.log(error));
-
-      ApiService.getAllUsers()
-      .then(response => {
-        this.users = response.data;
-        console.log(this.users);
-
       })
       .catch(error => console.log(error));
     },
@@ -164,33 +162,37 @@ export default {
     background-color: white;
 }
 
-.btn-comment {
-    border: 1px solid rgba(0, 0, 0, 0.5)
-}
 
 body {
-            background-color: #eeeeee;
-        }
-
-        .h7 {
-            font-size: 0.8rem;
-        }
-
-        .gedf-wrapper {
-            margin-top: 0.97rem;
+            background-color: #eeee;
+            text-align: left;
+            font-size: 18px;
         }
 
         a {
             color: #343A40;
         }
 
-        @media (min-width: 992px) {
-            .gedf-main {
-                padding-left: 4rem;
-                padding-right: 4rem;
+        .btn-responsive-comment {
+                padding:4px 9px;
+                font-size:90%;
+                line-height: 1.2;
             }
+
+        @media screen and (max-width: 992px) {
+
             .gedf-card {
-                margin-bottom: 2.77rem;
+                margin-bottom: 20px;
+            }
+            .btn-responsive {
+                padding:4px 9px;
+                font-size:90%;
+                line-height: 1.2;
+            }
+            .btn-responsive-comment {
+                padding:4px 9px;
+                font-size:80%;
+                line-height: 1;
             }
         }
 

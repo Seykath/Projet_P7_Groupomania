@@ -24,12 +24,20 @@ Comment.create = (newComment, result) => {
 // Récupération des commentaires
 
 Comment.getAll = result => {
-    sql.query("SELECT * FROM comments ORDER BY id DESC", (err, res) => {
+    sql.query(`SELECT comments.id, comments.post_id, comments.message, comments.date, comments.user_id, users.username FROM comments INNER JOIN users ON comments.user_id = users.id ORDER BY date DESC`, (err, res) => {
         if (err) {
             console.log("erreur: ", err);
             result(null, err);
             return;
         }
+        let commentaires = [];
+        commentaires = res.map(element => {
+            let content = new Comment(element)
+            content.author = {
+                username: element.username,
+            }
+            return commentaires;
+        })
         console.log("Comment : ", res);
         result(null, res);
     });

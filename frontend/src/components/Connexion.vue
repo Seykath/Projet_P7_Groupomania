@@ -16,7 +16,7 @@
     class="form-control"  
     placeholder="Jojo" 
     pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}" 
-    v-model="login.username">
+    v-model="username">
     <small id="pseudo" class="form-text text-muted"></small>
 </div>
 
@@ -27,7 +27,7 @@
     placeholder="ex : Alpha1!" 
     title="Doit contenir 6 caractères minimum, une majuscule, une minuscule et un chiffre" 
     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}" 
-    v-model="login.password">
+    v-model="password">
     <small id="smallpass" class="text-danger"></small>
 </div>
 
@@ -42,7 +42,8 @@
 
 <script>
 
-import axios from 'axios'
+
+import ApiService from '../api/api-service'
 
 
 export default {
@@ -50,10 +51,8 @@ export default {
     data() {
         return {
    errors: [],
-        login: {
         username: null,
         password: null,
-        },
         data:JSON.parse(localStorage.getItem('user')),
         user: "",
       }
@@ -75,21 +74,18 @@ export default {
           return true;
         }
 
-        let url='http://localhost:3000/api/auth/login';
-
-         axios.post(url, this.login)
+       ApiService.login(this.username, this.password)
          .then((result) => {
             localStorage.setItem("userId", result.data.userId)
             localStorage.setItem("token", result.data.token)
 
-         alert("Vous êtes à présent connecté !");
+         alert("Vous êtes à présent connecté !")
 
-         let id = JSON.parse(localStorage.getItem("userId"));
-     axios.get(`http://localhost:3000/api/auth/user/${id}`,{
-                        headers: {
-                            Authorization: "Bearer " + localStorage.getItem("token")
-                        }
-                    }) 
+
+         let userId = localStorage.getItem("userId");
+
+        ApiService.getOneUser(userId)
+        
         .then(response => {
           this.user = response.data
           console.log(this.user)
@@ -97,12 +93,11 @@ export default {
           this.nom = localStorage.setItem('nom', this.user.nom)
           this.prenom = localStorage.setItem('prenom', this.user.prenom)
           this.isAdmin = localStorage.setItem('isAdmin', this.user.isAdmin)
+          this.$router.push('/mur');
          
         })
         .catch(error => console.log(error))
         
-         
-          this.$router.push('/');
          })
          
          e.preventDefault();

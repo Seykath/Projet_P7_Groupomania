@@ -7,7 +7,7 @@
                     <input class="form-control" placeholder="Votre titre" id="postTitre" v-model="titre"/>
                     <br>
                     <textarea class="form-control" placeholder="Ecrivez-ici..." id="postContent" v-model="content" ></textarea>
-                    <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+                    <button type="submit" class="btn btn-info mt-3">Envoyer</button>
                 </div>
             </form>
          </div>
@@ -29,18 +29,17 @@ data() {
         errors: [],
      titre: null,
      content: null,
+     
     }
 },
 methods: {
     sendPost(e) {
-        const titre = this.titre;
-        const content = this.content;
-        console.log(titre);
-        console.log(content);
+        console.log(this.titre);
+        console.log(this.content);
 
         if (this.titre && this.content) {
             return true,
-            ApiService.createPost(titre, content)
+            ApiService.createPost(this.titre, this.content)
         .then(() => {
             alert('Post envoyé avec succès !')
         document.location.reload();

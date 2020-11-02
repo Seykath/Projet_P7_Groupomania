@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jsonWebToken = require('jsonwebtoken');
+const { createPool } = require('mysql');
 
 
 // CRÉATION D'UN UTILISATEUR 
@@ -96,6 +97,7 @@ exports.findAll = (req, res) => {
 exports.delete = (req, res) => {
 
     User.remove(req.params.id, (err, data) => {
+        console.log(req.params.id);
         if (err) {
             if (err.kind === "Non trouvé !") {
                 res.status(404).json({ message: "Utilisateur introuvable avec l'id : " + req.params.id })

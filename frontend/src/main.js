@@ -17,12 +17,13 @@ import {
   faShare,
   faEllipsisH,
   faClock,
-  faImages
+  faImages,
+  faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from './store'
 
-library.add(faUser, faUserPlus, faSignInAlt, faSignOutAlt, faStickyNote, faComment, faShare, faEllipsisH, faClock, faImages);
+library.add(faUser, faUserPlus, faSignInAlt, faSignOutAlt, faStickyNote, faComment, faShare, faEllipsisH, faClock, faImages, faBars);
 
 Vue.use(Vuex)
 Vue.config.productionTip = false

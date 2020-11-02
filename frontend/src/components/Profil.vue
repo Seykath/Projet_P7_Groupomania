@@ -24,7 +24,7 @@
     </p>
     </div>
     <div class="btn-profil col-md-4 mt-2">
-    <button class="btn btn-danger" @click="deleteUser" >Supprimer</button>
+    <button class="btn btn-danger" @click="deleteOneUser()">Supprimer</button>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@
 <script>
 
 
-import axios from "axios";
+import ApiService from '../api/api-service';
 
 
 export default {
@@ -42,44 +42,36 @@ export default {
     data(){
     return {
         data:JSON.parse(localStorage.getItem('user')),
-        userId:"",
+        userId: localStorage.getItem('userId'),
         user:"",
     }
 },
 mounted(){
+
     //Appel à API pour affichage des infos utilisateur
-    let id = JSON.parse(localStorage.getItem("userId"))
-     axios.get(`http://localhost:3000/api/auth/user/${id}`,{
-                        headers: {
-                            Authorization: "Bearer " + localStorage.getItem("token")
-                        }
-                    }) 
-        .then(response => {
+      console.log(this.userId);
+      ApiService.getOneUser(this.userId) 
+       .then(response => {
           console.log(response.data.id)
           this.user = response.data
-        
          
         })
         .catch(error => console.log(error)) 
-},
+    },
+
 methods:{
-    deleteUser : function () {//Fonction permettant à utilisateur de supprimer son compte 
-        let userId = JSON.parse(localStorage.getItem('userId'))
-        if(confirm('Voulez-vous vraiment supprimer le compte ?'),confirm('Attention, cette opération est irreversible !')){
-             axios.delete(`http://localhost:3000/api/auth/user/${userId}`, { 
-          headers: {
-                            Authorization: "Bearer " + localStorage.getItem("token")
-                        }
-        })
-       .then (() => { 
-                    localStorage.clear();
-                    alert('votre compte a bien été supprimé !');
-                    this.$router.push('/')
-                    
-       })
-       .catch(() =>{
-         console.log('Votre compte n\'a pas pu être supprimé !')
-       }) 
+    deleteOneUser() {//Fonction permettant à utilisateur de supprimer son compte 
+  
+        if ( confirm('Voulez-vous vraiment supprimer le compte ?') ) {
+          const id =  localStorage.getItem('userId');
+          console.log(id);
+          ApiService.deleteUser(id);
+          localStorage.clear();
+          alert('votre compte a bien été supprimé !');
+          this.$router.push('/');
+
+       } else {
+          return;
         }
     },
 }

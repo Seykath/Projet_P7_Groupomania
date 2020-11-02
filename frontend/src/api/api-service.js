@@ -4,6 +4,25 @@ import axios from "axios";
 const URL="http://localhost:3000/api/";
 const ApiService =  {
 
+
+   signup(nom, prenom, username, email, password){
+    return axios
+    .post(URL + "auth/signup",{ 
+      nom: nom,
+      prenom: prenom,
+      username: username,
+      email: email,
+      password: password,
+    })
+  },
+
+  login(username, password){
+    return axios
+    .post(URL + "auth/login",{ 
+      username: username,
+      password: password,
+    })
+  },
   
   getAllPost() {
     return axios
@@ -33,22 +52,30 @@ const ApiService =  {
       })
   },
 
-  getOneUser(user) {
-    console.log(user);
+  getOneUser(userId) {
     return axios
-      .get(URL + `auth/user/${user.user_id}`, {
+      .get(URL + `auth/user/${userId}`, {
              headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
       })
   },
 
-  createPost(titre, content) {
+  deleteUser(id) {
+    return axios 
+      .delete(URL + `auth/user/${id}`,{
+             headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+      })
+  },
+
+  createPost(titre, content, file) {
     return axios 
     .post(URL + "post/create",{ 
-      user_id: localStorage.getItem('userId'),
       titre: titre,
       content: content,
+      imageUrl: file,
     },
     {
             headers: {

@@ -1,8 +1,8 @@
 <template>
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Groupomania application</h1>
-    <p class="lead">Venez échanger avec vos collègues</p>
+    <h2 class="display-4">Groupomania application</h2>
+    <h5 class="lead">Venez échanger avec vos collègues</h5>
   </div>
 </div>
 </template>
