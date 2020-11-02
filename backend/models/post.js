@@ -5,7 +5,6 @@ const Post = function (e) {
     this.content = e.content
     this.post_id = e.id
     this.comments = e.comments ? e.comments : []
-    this.imageUrl = e.imageUrl
     this.date = e.date
     this.user_id = e.user_id
 };
@@ -13,7 +12,7 @@ const Post = function (e) {
 
 // Création d'un post
 Post.create = (newPost, result) => {
-    sql.query(`INSERT INTO posts (titre, content, imageUrl, user_id, date) VALUES ("${newPost.titre}","${newPost.content}","${newPost.imageUrl}","${newPost.user_id}", Now())`, (err, res) => {
+    sql.query(`INSERT INTO posts (titre, content, user_id, date) VALUES ("${newPost.titre}","${newPost.content}","${newPost.user_id}", Now())`, (err, res) => {
         if (err) {
             console.log("erreur: ", err);
             result(err, null);
@@ -26,7 +25,7 @@ Post.create = (newPost, result) => {
 
 // Récupération des posts
 Post.getAll = result => {
-    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.imageUrl, posts.date, posts.user_id, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY date DESC`, (err, res) => {
+    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.date, posts.user_id, users.username FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY date DESC`, (err, res) => {
         if (err) {
             console.log("erreur: ", err);
             result(null, err);
@@ -48,7 +47,7 @@ Post.getAll = result => {
 // Récupération post avec son ID
 
 Post.findById = (postId, result) => {
-    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.imageUrl, posts.date, posts.user_id, users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.id = ${postId} ORDER BY date DESC`,
+    sql.query(`SELECT posts.id, posts.titre, posts.content, posts.date, posts.user_id, users.username FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.id = ${postId} ORDER BY date DESC`,
         (err, res) => {
             if (err) {
                 console.log("erreur: ", err);

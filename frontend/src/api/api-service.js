@@ -70,12 +70,12 @@ const ApiService =  {
       })
   },
 
-  createPost(titre, content, file) {
+  createPost(titre, content) {
     return axios 
     .post(URL + "post/create",{ 
       titre: titre,
       content: content,
-      imageUrl: file,
+      user_id: localStorage.getItem('userId')
     },
     {
             headers: {

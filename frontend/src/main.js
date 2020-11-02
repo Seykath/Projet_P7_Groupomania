@@ -18,7 +18,7 @@ import {
   faEllipsisH,
   faClock,
   faImages,
-  faBars
+  faBars,
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from './store'

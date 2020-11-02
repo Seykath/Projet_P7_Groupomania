@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 02 nov. 2020 à 08:19
+-- Généré le : lun. 02 nov. 2020 à 15:36
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -60,21 +60,20 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `user_id` int(11) NOT NULL,
   `titre` varchar(100) NOT NULL,
   `content` text NOT NULL,
-  `imageUrl` varchar(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `posts`
 --
 
-INSERT INTO `posts` (`id`, `user_id`, `titre`, `content`, `imageUrl`, `date`) VALUES
-(12, 68, 'Bienvenue sur Groupomania', 'Salut à tous ! Bienvenue sur le premier réseau social d\'entreprise de Groupomania. Cette appli est conçu pour que vous puissiez partager avec vos collègues et favoriser également la cohésion de notre grand groupe !', '', '2020-10-19 14:11:07'),
-(13, 69, 'Félicitations !', 'Bravo à notre admin pour cette application bien sympathique !', '', '2020-10-19 14:14:01'),
-(15, 68, ' Mise à jour ! ', 'Petite mise à jour pour faire un essai sur la récupération d\'éléments', '', '2020-10-22 09:09:27'),
-(36, 70, 'Ajout des commentaires ', 'J\'apprécie beaucoup les petits onglets commentaires ! les couleurs sont sympathique et le fait de pouvoir voir le nombre de commentaires et un + ! Bravo !', '', '2020-10-30 02:01:16');
+INSERT INTO `posts` (`id`, `user_id`, `titre`, `content`, `date`) VALUES
+(12, 68, 'Bienvenue sur Groupomania', 'Salut à tous ! Bienvenue sur le premier réseau social d\'entreprise de Groupomania. Cette appli est conçu pour que vous puissiez partager avec vos collègues et favoriser également la cohésion de notre grand groupe !', '2020-10-19 14:11:07'),
+(13, 69, 'Félicitations !', 'Bravo à notre admin pour cette application bien sympathique !', '2020-10-19 14:14:01'),
+(15, 68, ' Mise à jour ! ', 'Petite mise à jour pour faire un essai sur la récupération d\'éléments', '2020-10-22 09:09:27'),
+(36, 70, 'Ajout des commentaires ', 'J\'apprécie beaucoup les petits onglets commentaires ! les couleurs sont sympathique et le fait de pouvoir voir le nombre de commentaires et un + ! Bravo !', '2020-10-30 02:01:16');
 
 -- --------------------------------------------------------
 
@@ -95,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `users`
@@ -104,7 +103,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `nom`, `prenom`, `isAdmin`, `createAt`) VALUES
 (68, 'admin@test.com', '$2b$10$XsuYzGVqJc.0x/dad8dlB.0BjrSXS/0Us9wUWmKG0bAyXhxjeu5re', 'Seykath', 'Chapalain', 'Tony', 'ADMIN', '2020-10-19 14:07:12'),
 (69, 'test01@test.com', '$2b$10$EUCNcZ5wsFq7DzPtRPz/IOyl/veW8uNKvJ00RCX8ZOUTN67CMcsMe', 'Ludo', 'Train', 'Ludovic', 'USER', '2020-10-19 14:11:44'),
-(70, 'test02@test.com', '$2b$10$f4ccNK/1ejKd/G0yy3gJvuysK/o3AK6Je078jyia1/axXhTHaLB16', 'Kiki', 'Chollet', 'Romain', 'USER', '2020-10-19 14:12:09');
+(70, 'test02@test.com', '$2b$10$f4ccNK/1ejKd/G0yy3gJvuysK/o3AK6Je078jyia1/axXhTHaLB16', 'Kiki', 'Chollet', 'Romain', 'USER', '2020-10-19 14:12:09'),
+(73, 'test04@test.com', '$2b$10$.hn6BDdfIho9c4crP28V9OLJVVbC3rRRmdbjsgHuDk5X1p7wkYchC', 'Heavy', 'Charles', 'Henry', 'USER', '2020-11-02 10:47:29');
 
 --
 -- Contraintes pour les tables déchargées

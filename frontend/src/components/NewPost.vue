@@ -29,17 +29,18 @@ data() {
         errors: [],
      titre: null,
      content: null,
-     
     }
 },
 methods: {
     sendPost(e) {
-        console.log(this.titre);
-        console.log(this.content);
+        const titre = this.titre;
+        const content = this.content;
+        console.log(titre);
+        console.log(content);
 
         if (this.titre && this.content) {
             return true,
-            ApiService.createPost(this.titre, this.content)
+            ApiService.createPost(titre, content)
         .then(() => {
             alert('Post envoyé avec succès !')
         document.location.reload();
