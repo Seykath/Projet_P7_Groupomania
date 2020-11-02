@@ -52,6 +52,15 @@ const ApiService =  {
       })
   },
 
+  getOnePost(post) {
+    return axios
+      .get(URL + `auth/post/${post.post_id}`, {
+             headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+      })
+  },
+
   getOneUser(userId) {
     return axios
       .get(URL + `auth/user/${userId}`, {
@@ -70,16 +79,13 @@ const ApiService =  {
       })
   },
 
-  createPost(titre, content) {
+  createPost(formData) {
     return axios 
-    .post(URL + "post/create",{ 
-      titre: titre,
-      content: content,
-      user_id: localStorage.getItem('userId')
-    },
+    .post(URL + "post/create", formData,
     {
             headers: {
-                    Authorization: "Bearer " + localStorage.getItem("token")
+              'Authorization': "Bearer " + localStorage.getItem("token"),
+              'Content-Type': 'multipart/form-data'
                 }
     })
   },

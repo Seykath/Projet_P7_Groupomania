@@ -21,8 +21,8 @@ Comment.create = (newComment, result) => {
     });
 }
 
-// Récupération des commentaires
 
+// Récupération des commentaires
 Comment.getAll = result => {
     sql.query(`SELECT comments.id, comments.post_id, comments.message, comments.date, comments.user_id, users.username FROM comments INNER JOIN users ON comments.user_id = users.id ORDER BY date DESC`, (err, res) => {
         if (err) {
@@ -38,7 +38,6 @@ Comment.getAll = result => {
             }
             return commentaires;
         })
-        console.log("Comment : ", res);
         result(null, res);
     });
 };

@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-const fs = require('fs');
+// const fs = require('fs');
 
 
 // Création Post
@@ -11,6 +11,7 @@ exports.create = (req, res) => {
     const post = new Post({
         titre: req.body.titre,
         content: req.body.content,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         user_id: req.body.user_id,
     })
     Post.create(post, (err, data) => {
@@ -28,7 +29,6 @@ exports.findAll = (req, res) => {
         if (err)
             res.status(500).send({ message: "Aucun posts trouvés !" + err });
         else {
-            console.log('postCtrl', posts)
 
             //Récupération de tous les commentaires
             Comment.getAll((err, comments) => {
@@ -74,7 +74,6 @@ exports.findOne = (req, res) => {
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
-
     Post.remove(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "Non trouvé !") {
