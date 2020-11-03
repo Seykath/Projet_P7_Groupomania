@@ -100,13 +100,11 @@ export default {
         if (!this.email) {
           this.errors.push("Email requis !");
         }
-        if (this.password) {
+        if (!this.password) {
           this.errors.push('Mot de passe requis');
         }
 
         if (!this.errors.length) {
-          return true;
-        }
 
         ApiService.signup(this.nom, this.prenom, this.username, this.email, this.password)
          .then(() => {
@@ -115,6 +113,7 @@ export default {
          
           this.$router.push('/connexion');
          })
+        }
          
          e.preventDefault();
       },

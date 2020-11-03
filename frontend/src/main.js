@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Vuex from 'vuex';
 import App from './App.vue'
 import router from './router'
 import 'bootstrap';
@@ -19,20 +18,17 @@ import {
   faClock,
   faImages,
   faBars,
+  faFileImage
 } from '@fortawesome/free-solid-svg-icons';
 
-import store from './store'
 
-library.add(faUser, faUserPlus, faSignInAlt, faSignOutAlt, faStickyNote, faComment, faShare, faEllipsisH, faClock, faImages, faBars);
+library.add(faUser, faUserPlus, faSignInAlt, faSignOutAlt, faStickyNote, faComment, faShare, faEllipsisH, faClock, faImages, faBars, faFileImage);
 
-Vue.use(Vuex)
-Vue.config.productionTip = false
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount('#app')
