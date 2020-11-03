@@ -67,7 +67,7 @@ Post.findById = (postId, result) => {
                 result(null, posts);
                 return;
             }
-            // not found Customer with the id
+            // Post avec l'id : non trouvé
             result({ kind: "Non trouvé" }, null);
         })
 };

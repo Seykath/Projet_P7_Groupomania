@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-// const fs = require('fs');
+const fs = require('fs');
 
 
 // Création Post
@@ -50,6 +50,7 @@ exports.findAll = (req, res) => {
 
 // Récupération d'un post + commentaires
 exports.findOne = (req, res) => {
+
     Post.findById(req.params.id, (err, posts) => {
         if (err) {
             res.status(500).send({ message: "Aucun post trouvé !" + err });
@@ -74,6 +75,8 @@ exports.findOne = (req, res) => {
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
+
+
     Post.remove(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "Non trouvé !") {

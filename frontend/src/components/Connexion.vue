@@ -42,9 +42,7 @@
 
 <script>
 
-
 import ApiService from '../api/api-service'
-
 
 export default {
     name: "connexion",
@@ -59,20 +57,17 @@ export default {
     },
     
     methods: {
-     
       loginForm(e) {
         this.errors = [];
 
-        if (!this.username) {
+        if (!this.username ) {
           this.errors.push('Pseudo requis !');
         }
-        if (this.password) {
+        if (!this.password) {
           this.errors.push('Mot de passe requis');
         }
 
         if (!this.errors.length) {
-          return true;
-        }
 
        ApiService.login(this.username, this.password)
          .then((result) => {
@@ -80,7 +75,6 @@ export default {
             localStorage.setItem("token", result.data.token)
 
          alert("Vous êtes à présent connecté !")
-
 
          let userId = localStorage.getItem("userId");
 
@@ -97,9 +91,9 @@ export default {
          
         })
         .catch(error => console.log(error))
-        
+
          })
-         
+        }
          e.preventDefault();
         
       },

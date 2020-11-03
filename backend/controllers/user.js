@@ -1,11 +1,9 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jsonWebToken = require('jsonwebtoken');
-const { createPool } = require('mysql');
 
 
 // CRÉATION D'UN UTILISATEUR 
-
 exports.signup = (req, res) => {
 
     if (!req.body) {
@@ -13,7 +11,6 @@ exports.signup = (req, res) => {
     }
 
     // Comparer les emails utilisateurs
-
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             let role = "USER"

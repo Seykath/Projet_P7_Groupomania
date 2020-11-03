@@ -22,7 +22,7 @@
                     <div class="card-body">
                             <h5 class="card-title">{{ post.titre }}</h5>
                         <p class="card-text">{{ post.content }}</p>
-                        <img :src="post.imageUrl" />
+                        <img class="center" :src="post.imageUrl" />
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-info btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span><font-awesome-icon icon="comment" class="ml-2" /></button>
@@ -164,10 +164,12 @@ export default {
 }
 
 img{
-        max-width: 100%;
-        max-height: 100%;
-        display: block;
-      }
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
 
 
 body {

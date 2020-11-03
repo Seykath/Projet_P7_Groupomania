@@ -7,7 +7,7 @@
                     <input class="form-control" placeholder="Votre titre" id="postTitre" v-model="titre"/>
                     <br>
                     <textarea class="form-control" placeholder="Ecrivez-ici..." id="postContent" v-model="content" ></textarea>
-                    <input class="mt-2" type="file" accept="image/*" ref="file" @change="selectFile"/>
+                    <input class="mt-2 file-upload" type="file" accept="image/*" ref="file" @change="selectFile"/>
                     <br>
                     <button type="submit" class="btn btn-info mt-3">Envoyer</button>
                 </div>
@@ -48,7 +48,6 @@ methods: {
         formData.append('content', this.content);
         formData.append('file', this.file);
         formData.append('user_id', this.userId);
-        console.log(formData);
 
         if (this.titre && this.content) {
             return true,
@@ -75,3 +74,11 @@ methods: {
 }
 
 </script>
+
+<style>
+
+.file-upload {
+    word-wrap: break-word;
+}
+
+</style>

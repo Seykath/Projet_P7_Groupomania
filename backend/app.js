@@ -4,7 +4,6 @@ const path = require('path');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const rateLimit = require("express-rate-limit");
-const cors = require('cors');
 
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
@@ -25,7 +24,6 @@ const limiter = rateLimit({
     max: 1000 // Limite à 1000 requête !
 });
 
-app.use(cors());
 app.use(bodyParser.json());// Va transformer le corps de la requête en objet JS utilisable
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
