@@ -21,7 +21,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ post.titre }}</h5>
                 <p class="card-text">{{ post.content }}</p>
-                <img class="center" :src="post.imageUrl" :alt="post.titre"/>
+                <img v-if="post.imageUrl != ''" class="center" :src="post.imageUrl" :alt="post.titre"/>
             </div>
             <div class="card-footer">
                 <button class="btn btn-dark btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span>
