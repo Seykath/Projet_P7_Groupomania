@@ -4,6 +4,7 @@
   <img
         id="profile-img"
         src="../assets/icon-left-font-monochrome-black-mini.png"
+        alt="groupomania logo"
         class="profile-img-card"
       />
 <form id="login-form" @submit="loginForm">
@@ -109,6 +110,11 @@ label {
   display: block;
   margin-top: 10px;
 }
+
+a {
+  color: blue;
+}
+
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;

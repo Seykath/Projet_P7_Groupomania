@@ -21,7 +21,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ post.titre }}</h5>
                 <p class="card-text">{{ post.content }}</p>
-                <img class="center" :src="post.imageUrl"/>
+                <img class="center" :src="post.imageUrl" :alt="post.titre"/>
             </div>
             <div class="card-footer">
                 <button class="btn btn-dark btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span>
@@ -41,7 +41,8 @@
                 <form @submit.prevent="sendComment(post.post_id)" >
                     <div class="form-group">
                         <div class="input-group mb-2 mt-2 pl-3 pr-3">
-                            <input type="text" class="form-control"  placeholder="Ecrire un commentaire" v-model.lazy="message">
+                            <label for="comment" class="mr-2">commentaire</label>
+                            <input type="text" class="form-control"  placeholder="Ecrire un commentaire" v-model.lazy="message" aria-label="ajouter un commentaire">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
                                  </div>
@@ -125,6 +126,7 @@ export default {
         console.log(this.comments);
       })
       .catch(error => console.log(error));
+
     },
 }
 </script>

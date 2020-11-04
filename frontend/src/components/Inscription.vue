@@ -4,6 +4,7 @@
   <img
         id="profile-img"
         src="../assets/icon-left-font-monochrome-black-mini.png"
+        alt="groupomania logo"
         class="profile-img-card"
       />
 <form @submit.prevent="submitForm">
@@ -125,6 +126,10 @@ export default {
 </script>
 
 <style scoped>
+
+a {
+  color: blue;
+}
 
 label {
   display: block;

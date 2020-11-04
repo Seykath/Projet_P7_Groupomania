@@ -4,10 +4,10 @@
         <div class="card-body">
             <form @submit.prevent="sendPost" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" placeholder="Votre titre" id="postTitre" v-model="titre"/>
+                    <input class="form-control" placeholder="Votre titre" id="postTitre" v-model="titre" aria-label="ajouter un titre"/>
                     <br>
-                    <textarea class="form-control" placeholder="Ecrivez-ici..." id="postContent" v-model="content" ></textarea>
-                    <input class="mt-2" type="file" accept="image/*" ref="file" @change="selectFile"/>
+                    <textarea class="form-control" placeholder="Ecrivez-ici..." id="postContent" v-model="content" aria-label="ajouter un message" ></textarea>
+                    <input class="mt-2" type="file" accept="image/*" ref="file" aria-label="image à selectionner" @change="selectFile"/>
                     <br>
                     <button type="submit" class="btn btn-dark mt-3">Envoyer</button>
                 </div>

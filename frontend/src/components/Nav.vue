@@ -5,12 +5,12 @@
       <img
         class="groupomania-logo"
         src="../assets/icon-left-font-monochrome-white-mini.png"
-        alt=""
+        alt="groupomania logo"
     /></a>
 </router-link>
 
 <div class="dropdown dropleft ml-auto">
-   <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="bouton menu">
     <font-awesome-icon icon="bars" size="2x" id="bars-menu" />
   </button>
   
@@ -70,6 +70,7 @@ export default {
 
 a {
   cursor: pointer;
+  color: blue;
 }
 
 @media screen and (max-width: 700px) {
