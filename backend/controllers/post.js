@@ -88,6 +88,8 @@ exports.findOne = (req, res) => {
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
+
+           
     Post.remove(req.params.id, (err, data) => {
 
         if (err) {

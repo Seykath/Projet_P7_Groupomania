@@ -21,10 +21,10 @@
             <div class="card-body">
                 <h5 class="card-title">{{ post.titre }}</h5>
                 <p class="card-text">{{ post.content }}</p>
-                <img class="center" :src="post.imageUrl" />
+                <img class="center" :src="post.imageUrl"/>
             </div>
             <div class="card-footer">
-                <button class="btn btn-info btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span>
+                <button class="btn btn-dark btn-responsive" v-if="post.comments.length >= 0" @click="showCommentsAction(post)">{{post.comments.length}} Commentaire<span v-if="post.comments.length > 1">s</span>
                 <font-awesome-icon icon="comment" class="ml-2" /></button>
                     <div class="postComments" v-if="showComments[post.post_id]">
                         <div class=" mt-2" v-for="comment in comments" :key="comment.postId">
@@ -136,9 +136,6 @@ export default {
     color: white;
 }
 
-.modify:hover {
-    background-color: rgb(73, 186, 221);
-}
 
 .delete:hover {
     background-color: rgb(253, 29, 29);

@@ -10,7 +10,7 @@
 </router-link>
 
 <div class="dropdown dropleft ml-auto">
-   <button class="btn btn-info btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <font-awesome-icon icon="bars" size="2x" id="bars-menu" />
   </button>
   

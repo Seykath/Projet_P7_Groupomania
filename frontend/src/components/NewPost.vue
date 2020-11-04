@@ -9,7 +9,7 @@
                     <textarea class="form-control" placeholder="Ecrivez-ici..." id="postContent" v-model="content" ></textarea>
                     <input class="mt-2" type="file" accept="image/*" ref="file" @change="selectFile"/>
                     <br>
-                    <button type="submit" class="btn btn-info mt-3">Envoyer</button>
+                    <button type="submit" class="btn btn-dark mt-3">Envoyer</button>
                 </div>
             </form>
          </div>
