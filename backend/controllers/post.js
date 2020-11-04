@@ -5,10 +5,22 @@ const fs = require('fs');
 
 // Création Post
 exports.create = (req, res) => {
-    if (!req.body) {
-        res.status(400).json({ message: "Erreur" })
-    }
+    if (!req.file) {
+    
     const post = new Post({
+        titre: req.body.titre,
+        content: req.body.content,
+        imageUrl: "",
+        user_id: req.body.user_id,
+    })
+    Post.create(post, (err, data) => {
+        if (err)
+            res.status(500).json({ message: "Post non créé !" })
+        else res.send(data)
+    })
+
+    } else {
+        const post = new Post({
         titre: req.body.titre,
         content: req.body.content,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -18,7 +30,8 @@ exports.create = (req, res) => {
         if (err)
             res.status(500).json({ message: "Post non créé !" })
         else res.send(data)
-    });
+    })
+    }
 }
 
 
@@ -75,9 +88,8 @@ exports.findOne = (req, res) => {
 
 // Suppresion d'un post
 exports.delete = (req, res) => {
-
-
     Post.remove(req.params.id, (err, data) => {
+
         if (err) {
             if (err.kind === "Non trouvé !") {
                 res.status(404).json({ message: "Post introuvable avec l'id : " + req.params.id })

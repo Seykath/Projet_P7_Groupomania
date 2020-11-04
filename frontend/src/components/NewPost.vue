@@ -28,7 +28,6 @@ export default {
 name : "NewPost",
 data() {
     return {
-        errors: [],
      titre: null,
      content: null,
      file: "",
@@ -50,32 +49,18 @@ methods: {
         formData.append('user_id', this.userId);
 
         if (this.titre && this.content) {
-            return true,
             ApiService.createPost(formData)
         .then(() => {
             alert('Post envoyé avec succès !')
         document.location.reload();
         })
+        } else {
+            alert("Titre ou message non remplit !")
         }
 
-        this.errors = [];
-
-        if (!this.titre) {
-            this.errors.push('Titre requis')
-        }
-        if (!this.content) {
-            this.errors.push('Content requis')
-        }
-
-        alert('Titre et Message requis !')
         e.preventDefault();
     }
 }
 }
 
 </script>
-
-<style>
-
-
-</style>
